@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+ 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+ 	<meta name="format-detection" content="telephone=no" />
+	<title>计算器</title>
+	<style>
+
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		body{
+			background: #ffffcc;
+			font-size: 12px;
+			font-family: "微软雅黑";
+			color: #666;
+		}
+		ul,ol{
+			list-style: none;
+		}
+
+
+	</style>
+</head>
+<body>
+	
+	<div>
+		<div>计算器</div>
+		<div>
+			<!-- onfocus="this.blur()"作用是使键盘无法输入 -->
+			<input type="text" value="0" onfocus="this.blur();" id="result">
+		</div>
+		<div>
+			<ul>
+				<!-- 每个按钮都要添加onclick点击事件，不然按钮不能用； -->
+				<li onclick="command(7);">7</li> 
+				<li onclick="command(8);">8</li>
+				<li onclick="command(9);">9</li>
+				<li><-</li>
+				<li onclick="clearzero('j');">C</li> 
+				<li onclick="command(4);">4</li>
+				<li onclick="command(5);">5</li>
+				<li onclick="command(6);">6</li>
+				<li onclick="tools('*','g');">×</li>
+				<li onclick="tools('/','g');">÷</li>
+				<li onclick="command(1);">1</li>
+				<li onclick="command(2);">2</li>
+				<li onclick="command(3);">3</li>
+				<li onclick="tools('+','g');">+</li>
+				<li onclick="tools('-','g');">-</li>
+				<li onclick="command(0);">0</li>
+				<li onclick="command(00);">00</li>
+				<li onclick="dot('g');">.</li>
+				<li onclick="tools('%','g');">%</li>
+				<li onclick="equal('j');">=</li>
+				<div></div>
+			</ul>
+		</div>
+	</div>
+
+	<script>
+
+		// 点击按钮执行操作
+		var resultDom = document.getElementById("result");
+		var operate = true;
+		var xop = true;
+		function command(num){
+			if(needclear == 1){
+				needclear = 0;
+				resultDom.value = "";
+			}
+			var str = resultDom.value;
+			str = (str == "0" ? "" : str);
+			resultDom.value = str + num;
+			operate = true;
+			// play(num);
+		}
+
+		// 清空
+		function clearzero(m){
+			resultDom.value = 0;
+			// play(m);
+		}
+
+		// 计算等号
+		var needclear = 0;
+		function equal(m){
+			needclear = 1;
+			var result = resultDom.value.toString();
+			var r = eval(result);
+			resultDom.value = r;
+			// play(m);
+		}
+ 
+ 		// 小数点
+ 		function dot(m){
+ 			if(xop){
+ 				var num = resultDom.value.toString();
+ 				num += ".";
+ 				resultDom.value = num;
+ 				xop = true;
+ 			}
+ 			// play(m);
+ 		}
+ 
+ 		// 点击操作符
+ 		function tools(op,m){
+ 			if(operate){
+ 				var num = resultDom.value;
+ 				num = (num == "0" ? "" : num);
+ 				resultDom.value = num + op;
+ 				operate = false;
+ 			}
+ 			// play(m);
+ 		}
+ 
+ 		
+		 // //按键声音
+		 // function play(num){
+		 // var audioDom = document.getElementById("audio");
+		 // audioDom.innerHTML = "<embed src='wav/"+num+".wav' width='0' height='0'></embed>" 
+		 // }
+
+	</script>
+
+</body>
+</html>
+
+
+
